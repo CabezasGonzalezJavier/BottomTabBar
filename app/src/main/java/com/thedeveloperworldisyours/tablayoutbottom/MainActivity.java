@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,13 +20,13 @@ import com.thedeveloperworldisyours.tablayoutbottom.fragments.ThirdFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String M_CURRENT_TAB = "M_CURRENT_TAB";
+    public static final String CURRENT_TAB = "CURRENT_TAB";
     private TabHost mTabHost;
     private String mCurrentTab;
 
-    public static final String TAB_TAGS = "TAB_TAGS";
-    public static final String TAB_MAP = "TAB_MAP";
-    public static final String TAB_SETTINGS = "TAB_SETTINGS";
+    public static final String FIRST_TAB = "FIRST_TAB";
+    public static final String SECOND_TAB = "SECOND_TAB";
+    public static final String THIRD_TAB = "THIRD_TAB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.setup();
 
         if (savedInstanceState != null) {
-            mCurrentTab = savedInstanceState.getString(M_CURRENT_TAB);
+            mCurrentTab = savedInstanceState.getString(CURRENT_TAB);
             initializeTabs();
             mTabHost.setCurrentTabByTag(mCurrentTab);
             /*
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private View createTabView(final int id, final String text) {
         View view = LayoutInflater.from(this).inflate(R.layout.tabs_icon, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
-        imageView.setImageDrawable(getResources().getDrawable(id));
+        imageView.setImageDrawable(ContextCompat.getDrawable(this, id));
         TextView textView = (TextView) view.findViewById(R.id.tab_text);
         textView.setText(text);
         return view;
@@ -67,32 +68,32 @@ public class MainActivity extends AppCompatActivity {
 
         TabHost.TabSpec spec;
 
-        spec = mTabHost.newTabSpec(TAB_TAGS);
+        spec = mTabHost.newTabSpec(FIRST_TAB);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
-                return findViewById(R.id.realtabcontent);
+                return findViewById(R.id.activity_main_real_tab_content);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_menu_camera, getString(R.string.fragment_first_title)));
+        spec.setIndicator(createTabView(R.drawable.ic_menu_camera_selector, getString(R.string.fragment_first_title)));
         mTabHost.addTab(spec);
 
-        spec = mTabHost.newTabSpec(TAB_MAP);
+        spec = mTabHost.newTabSpec(SECOND_TAB);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
-                return findViewById(R.id.realtabcontent);
+                return findViewById(R.id.activity_main_real_tab_content);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_menu_gallery, getString(R.string.fragment_second_title)));
+        spec.setIndicator(createTabView(R.drawable.ic_menu_gallery_selector, getString(R.string.fragment_second_title)));
         mTabHost.addTab(spec);
 
 
-        spec = mTabHost.newTabSpec(TAB_SETTINGS);
+        spec = mTabHost.newTabSpec(THIRD_TAB);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
-                return findViewById(R.id.realtabcontent);
+                return findViewById(R.id.activity_main_real_tab_content);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_menu_manage, getString(R.string.fragment_third_title)));
+        spec.setIndicator(createTabView(R.drawable.ic_menu_manage_selector, getString(R.string.fragment_third_title)));
         mTabHost.addTab(spec);
 
     }
@@ -106,13 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
             mCurrentTab = tabId;
 
-            if (tabId.equals(TAB_TAGS)) {
+            if (tabId.equals(FIRST_TAB)) {
                 pushFragments(FirstFragment.newInstance(), false,
                         false, null);
-            } else if (tabId.equals(TAB_MAP)) {
+            } else if (tabId.equals(SECOND_TAB)) {
                 pushFragments(SecondFragment.newInstance(), false,
                         false, null);
-            } else if (tabId.equals(TAB_SETTINGS)) {
+            } else if (tabId.equals(THIRD_TAB)) {
                 pushFragments(ThirdFragment.newInstance(), false,
                         false, null);
             }
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 //                    R.animator.fragment_slide_right_enter,
 //                    R.animator.fragment_slide_right_exit);
 //        }
-        ft.replace(R.id.realtabcontent, fragment, tag);
+        ft.replace(R.id.activity_main_real_tab_content, fragment, tag);
 
         if (shouldAdd) {
             /*
@@ -169,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString(M_CURRENT_TAB, mCurrentTab);
+        outState.putString(CURRENT_TAB, mCurrentTab);
         super.onSaveInstanceState(outState);
     }
 
