@@ -2,6 +2,7 @@
     <string name="app_name">TabBarBottom</string>
 
     <string name="fragment_first_title">First</string>
+    <string name="the_developer_world_is_yours">TheDeveloperWorldIsYours.com</string>
     <string name="fragment_second_title">Second</string>
     <string name="fragment_third_title">Third</string>
 </resources>
